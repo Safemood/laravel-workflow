@@ -2,6 +2,4 @@
 
 namespace Safemood\Workflow;
 
-class Workflow
-{
-}
+class Workflow {}
