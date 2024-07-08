@@ -2,9 +2,9 @@
 
 namespace Safemood\Workflow;
 
+use Safemood\Workflow\Commands\WorkflowCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Safemood\Workflow\Commands\WorkflowCommand;
 
 class WorkflowServiceProvider extends PackageServiceProvider
 {
