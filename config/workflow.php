@@ -1,6 +1,15 @@
 <?php
 
-// config for Safemood/Workflow
 return [
+
+  /*
+    |--------------------------------------------------------------------------
+    | Workflow Config
+    |--------------------------------------------------------------------------
+    |
+    | Configuration options for the laravel-workflow package.
+    |
+    */
+
 
 ];

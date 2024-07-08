@@ -35,7 +35,8 @@
     "autoload": {
         "psr-4": {
             "Safemood\\Workflow\\": "src/",
-            "Safemood\\Workflow\\Database\\Factories\\": "database/factories/"
+            "Safemood\\Workflow\\Database\\Factories\\": "database/factories/",
+            "App\\Workflows\\": "app/Workflows/"
         }
     },
     "autoload-dev": {
