@@ -11,7 +11,7 @@ trait TracksEvents
     /**
      * Register event listeners to track specified events or namespaces.
      *
-     * @param array|string $events Event names or namespace patterns to track
+     * @param  array|string  $events  Event names or namespace patterns to track
      * @return void
      */
     protected function trackEvents($events)
@@ -36,31 +36,29 @@ trait TracksEvents
     /**
      * Track all events within a specific namespace.
      *
-     * @param string $namespace Namespace of the events to track
+     * @param  string  $namespace  Namespace of the events to track
      * @return void
      */
     protected function trackEventsInNamespace(string $namespace)
     {
-        Event::listen('*', function (  $eventName, $payload) use ($namespace) {
-     
+        Event::listen('*', function ($eventName, $payload) use ($namespace) {
+
             if (strpos($eventName, $namespace) === 0) {
                 $this->recordTrackedEvent($eventName, $payload);
             }
         });
 
-        
     }
 
     /**
      * Record a tracked event.
      *
-     * @param string $eventName
-     * @param mixed $payload
+     * @param  mixed  $payload
      * @return void
      */
     protected function recordTrackedEvent(string $eventName, $payload)
     {
-    
+
         $this->trackedEvents[] = [
             'event' => $eventName,
             'payload' => $payload,

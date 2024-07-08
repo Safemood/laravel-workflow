@@ -16,5 +16,4 @@ class WorkflowServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasCommand(WorkflowCommand::class);
     }
-
 }

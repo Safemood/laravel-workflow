@@ -7,11 +7,10 @@ use Safemood\Workflow\Enums\ActionState;
 
 trait TracksActionStates
 {
-
     /**
      * Initialize the state for the given action.
      *
-     * @param mixed $action
+     * @param  mixed  $action
      * @return void
      */
     public function initializeActionState($action)
@@ -25,9 +24,9 @@ trait TracksActionStates
     /**
      * Update the state of the given action.
      *
-     * @param mixed $action
-     * @param string $state
-     * @param \Exception|null $exception
+     * @param  mixed  $action
+     * @param  string  $state
+     * @param  \Exception|null  $exception
      * @return void
      */
     public function updateActionState($action, $state, $exception = null)

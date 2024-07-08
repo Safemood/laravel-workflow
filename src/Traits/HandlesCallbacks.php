@@ -7,24 +7,29 @@ use Safemood\Workflow\Enums\ActionState;
 trait HandlesCallbacks
 {
     protected $stateCallback;
+
     protected $successCallback;
+
     protected $failedCallback;
 
     public function progress(callable $callback)
     {
         $this->stateCallback = $callback;
+
         return $this;
     }
 
     public function success(callable $callback)
     {
         $this->successCallback = $callback;
+
         return $this;
     }
 
     public function failed(callable $callback)
     {
         $this->failedCallback = $callback;
+
         return $this;
     }
 

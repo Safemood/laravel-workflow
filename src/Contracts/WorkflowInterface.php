@@ -4,5 +4,5 @@ namespace Safemood\Workflow\Contracts;
 
 interface WorkflowInterface
 {
-     public function handle(array $context);
+    public function handle(array $context);
 }
