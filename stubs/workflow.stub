@@ -1,0 +1,14 @@
+<?php
+
+namespace {{ namespace }};
+
+use Safemood\Workflow\WorkflowManager;
+
+class {{ class }} extends WorkflowManager
+{
+    public function handle(array $context)
+    {
+        // add your actions here
+    }
+ 
+}

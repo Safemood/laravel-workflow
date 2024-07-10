@@ -1,0 +1,13 @@
+<?php
+
+namespace {{ namespace }};
+
+use Safemood\Workflow\Action;
+
+class {{ class }} extends Action
+{
+    public function handle(array &$context)
+    {
+        // Action logic goes here
+    }
+}
