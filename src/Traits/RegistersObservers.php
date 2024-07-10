@@ -41,7 +41,7 @@ trait RegistersObservers
      *
      * @return array
      */
-    public function getObservers()
+    public function observers()
     {
         return $this->observers;
     }
@@ -51,7 +51,7 @@ trait RegistersObservers
      *
      * @return void
      */
-    public function bootObservers()
+    protected function bootObservers()
     {
 
         foreach ($this->observers as $model => $observer) {
