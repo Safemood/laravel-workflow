@@ -8,8 +8,8 @@ trait WorkflowTraits
     use ActionsTrait;
     use RegistersObservers;
     use TracksActionStates;
- 
     use TracksEvents;
+    use HasResponses;
    
 
 }
