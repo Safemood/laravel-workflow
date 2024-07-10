@@ -9,46 +9,45 @@ trait TracksEvents
     protected $trackedEvents = [];
 
     /**
-     * Register event listeners to track specified events or namespaces.
+     * Register event listeners to track all events.
      *
-     * @param array|string $events Event names or namespace patterns to track
      * @return void
      */
-    protected function trackEvents($events)
+    protected function trackAllEvents()
     {
-        if (is_string($events)) {
-            $events = [$events];
-        }
-
-        foreach ($events as $event) {
-            if (strpos($event, '\\') !== false) {
-                // Track events in a specific namespace
-                $this->trackEventsInNamespace($event);
-            } else {
-                // Track a specific event name
-                Event::listen($event, function ($eventName, $payload) {
-                    $this->recordTrackedEvent($eventName, $payload);
-                });
-            }
-        }
+        Event::listen('*', function ($eventName, $payload) {
+            $this->recordTrackedEvent($eventName, $payload);
+        });
     }
 
     /**
-     * Track all events within a specific namespace.
+     * Register event listeners to track events within a specific namespace.
      *
      * @param string $namespace Namespace of the events to track
      * @return void
      */
-    protected function trackEventsInNamespace(string $namespace)
+    protected function trackEventsIn(string $namespace)
     {
-        Event::listen('*', function (  $eventName, $payload) use ($namespace) {
-     
+        Event::listen('*', function ($eventName, $payload) use ($namespace) {
             if (strpos($eventName, $namespace) === 0) {
                 $this->recordTrackedEvent($eventName, $payload);
             }
         });
+    }
 
-        
+    /**
+     * Register event listeners to track specified events.
+     *
+     * @param array $events Event names or classes to track
+     * @return void
+     */
+    protected function trackEvents(array $events)
+    {
+        foreach ($events as $event) {
+            Event::listen($event, function ($payload) use ($event) {
+                $this->recordTrackedEvent($event, $payload);
+            });
+        }
     }
 
     /**
@@ -60,7 +59,6 @@ trait TracksEvents
      */
     protected function recordTrackedEvent(string $eventName, $payload)
     {
-    
         $this->trackedEvents[] = [
             'event' => $eventName,
             'payload' => $payload,
@@ -73,7 +71,7 @@ trait TracksEvents
      *
      * @return array
      */
-    public function getTrackedEvents()
+    public function trackedEvents()
     {
         return $this->trackedEvents;
     }
