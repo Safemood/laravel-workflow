@@ -2,24 +2,24 @@
 
 namespace Safemood\Workflow\Traits;
 
-use Illuminate\Queue\Events\JobProcessed;
-use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Queue;
-use Safemood\Workflow\Enums\ActionState;
+
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Safemood\Workflow\Enums\ActionState;
 
 trait ManagesWorkflowExecution
 {
     protected $autoBootObservers = true;
+
     protected $stopOnFailure = true;
 
-    public static function run(array $context, bool $stopOnFailure = true, bool $autoBootObservers = true)
+    public function run(array $context, bool $stopOnFailure = true, bool $autoBootObservers = true)
     {
-        $workflow = new static();
+        $workflow = new $this();
         $workflow->setAutoBootObservers($autoBootObservers);
         $workflow->setStopOnFailure($stopOnFailure);
         $workflow->handle($context);
         $workflow->execute($context);
+
         return $workflow;
     }
 
@@ -48,14 +48,14 @@ trait ManagesWorkflowExecution
 
     protected function executeWorkflowActions(array &$context)
     {
-        if (!$this->executeActions($this->beforeActions, $context)) {
+        if (! $this->executeActions($this->beforeActions, $context)) {
             return;
         }
-        if (!$this->executeActions($this->mainActions, $context)) {
+        if (! $this->executeActions($this->mainActions, $context)) {
             return;
         }
 
-        if (!$this->executeActions($this->afterActions, $context)) {
+        if (! $this->executeActions($this->afterActions, $context)) {
             return;
         }
     }
@@ -81,6 +81,7 @@ trait ManagesWorkflowExecution
                 }
             }
         }
+
 
         return true;
     }
