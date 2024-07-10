@@ -11,8 +11,8 @@ trait RegistersObservers
     /**
      * Register observers for the given models.
      *
-     * @param array $observers
-     * Example: ['App\Models\User' => 'App\Observers\UserObserver', 'App\Models\Post' => 'App\Observers\PostObserver']
+     * @param  array  $observers
+     *                            Example: ['App\Models\User' => 'App\Observers\UserObserver', 'App\Models\Post' => 'App\Observers\PostObserver']
      * @return void
      */
     public function registerObservers(array $observers)
@@ -25,13 +25,11 @@ trait RegistersObservers
     /**
      * Register an observer for a single model.
      *
-     * @param string $model
-     * @param string $observer
      * @return void
      */
     public function registerObserver(string $model, string $observer)
     {
-        if (!isset($this->observers[$model])) {
+        if (! isset($this->observers[$model])) {
             $this->observers[$model] = $observer;
         }
     }
@@ -55,7 +53,7 @@ trait RegistersObservers
     {
 
         foreach ($this->observers as $model => $observer) {
-            Event::listen('eloquent.booted: ' . $model, function () use ($model, $observer) {
+            Event::listen('eloquent.booted: '.$model, function () use ($model, $observer) {
                 $model::observe($observer);
             });
         }
@@ -69,7 +67,7 @@ trait RegistersObservers
      */
     protected function bootObserversIfNeeded()
     {
-        if (!empty($this->observers)) {
+        if (! empty($this->observers)) {
             $this->bootObservers();
         }
     }

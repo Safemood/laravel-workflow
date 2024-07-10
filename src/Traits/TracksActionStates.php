@@ -4,8 +4,6 @@ namespace Safemood\Workflow\Traits;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\Events\JobFailed;
-use Illuminate\Queue\Events\JobProcessed;
-use Queue;
 use Safemood\Workflow\Action;
 use Safemood\Workflow\Enums\ActionState;
 
@@ -42,7 +40,6 @@ trait TracksActionStates
         }
     }
 
-    
     public function passes(): bool
     {
         $allActions = array_merge($this->beforeActions, $this->mainActions, $this->afterActions);
@@ -66,9 +63,8 @@ trait TracksActionStates
         return true;
     }
 
-
     public function failed(): bool
     {
-        return !$this->passes();
+        return ! $this->passes();
     }
 }
