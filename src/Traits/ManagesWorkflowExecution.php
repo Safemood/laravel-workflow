@@ -2,6 +2,9 @@
 
 namespace Safemood\Workflow\Traits;
 
+use Illuminate\Queue\Events\JobProcessed;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Queue;
 use Safemood\Workflow\Enums\ActionState;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -10,7 +13,7 @@ trait ManagesWorkflowExecution
     protected $autoBootObservers = true;
     protected $stopOnFailure = true;
 
-    public static function run(array $context, bool $autoBootObservers = true, bool $stopOnFailure = true)
+    public static function run(array $context, bool $stopOnFailure = true, bool $autoBootObservers = true)
     {
         $workflow = new static();
         $workflow->setAutoBootObservers($autoBootObservers);
@@ -78,7 +81,7 @@ trait ManagesWorkflowExecution
                 }
             }
         }
-        
+
         return true;
     }
 
@@ -89,18 +92,14 @@ trait ManagesWorkflowExecution
 
     protected function isJobAction($action): bool
     {
-        return is_string($action) && is_subclass_of($action, ShouldQueue::class);
+
+        return $action instanceof ShouldQueue;
     }
 
     protected function dispatchJob($action, array $context): void
     {
-        $job = $action::dispatch($context);
-        $job->chain([
-            function () use ($job, $action) {
-                if ($job->jobFailed()) {
-                    $this->updateActionState($action, ActionState::FAILED);
-                }
-            }
-        ]);
+
+        $action::dispatch($context);    
+
     }
 }
