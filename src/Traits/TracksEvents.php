@@ -23,7 +23,7 @@ trait TracksEvents
     /**
      * Register event listeners to track events within a specific namespace.
      *
-     * @param string $namespace Namespace of the events to track
+     * @param  string  $namespace  Namespace of the events to track
      * @return void
      */
     protected function trackEventsIn(string $namespace)
@@ -53,8 +53,7 @@ trait TracksEvents
     /**
      * Record a tracked event.
      *
-     * @param string $eventName
-     * @param mixed $payload
+     * @param  mixed  $payload
      * @return void
      */
     protected function recordTrackedEvent(string $eventName, $payload)

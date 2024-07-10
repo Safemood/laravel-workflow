@@ -5,12 +5,13 @@ namespace Safemood\Workflow;
 abstract class Action
 {
     private $state;
+
     private $exception;
 
     /**
      * Handle the action.
      *
-     * @param array &$context The context data passed through the workflow.
+     * @param  array  &$context  The context data passed through the workflow.
      * @return void
      */
     abstract public function handle(array &$context);
@@ -28,7 +29,7 @@ abstract class Action
     /**
      * Set the state of the action.
      *
-     * @param mixed $state
+     * @param  mixed  $state
      * @return void
      */
     public function setState($state)
@@ -49,7 +50,7 @@ abstract class Action
     /**
      * Set the exception of the action.
      *
-     * @param \Exception|null $exception
+     * @param  \Exception|null  $exception
      * @return void
      */
     public function setException($exception)
