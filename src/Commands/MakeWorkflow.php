@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class MakeWorkflow extends GeneratorCommand
 {
     protected $name = 'make:workflow';
+
     protected $description = 'Create a new workflow class';
 
     protected $type = 'Workflow';

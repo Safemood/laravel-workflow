@@ -8,7 +8,7 @@ trait HasResponses
     {
         return response([
             'status' => 'success',
-            'message' => 'The operation completed successfully'
+            'message' => 'The operation completed successfully',
         ], 200);
     }
 
@@ -16,7 +16,7 @@ trait HasResponses
     {
         return response([
             'status' => 'failed',
-            'message' => 'The operation failed to complete'
+            'message' => 'The operation failed to complete',
         ], 400);
     }
 }

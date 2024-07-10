@@ -2,7 +2,6 @@
 
 namespace Safemood\Workflow;
 
-
 use Safemood\Workflow\Commands\MakeAction;
 use Safemood\Workflow\Commands\MakeWorkflow;
 use Spatie\LaravelPackageTools\Package;
@@ -17,8 +16,7 @@ class WorkflowServiceProvider extends PackageServiceProvider
             ->name('laravel-workflow')
             ->hasCommands([
                 MakeWorkflow::class,
-                MakeAction::class
+                MakeAction::class,
             ]);
     }
-
 }

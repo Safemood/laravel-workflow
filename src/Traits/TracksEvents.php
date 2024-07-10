@@ -38,7 +38,7 @@ trait TracksEvents
     /**
      * Register event listeners to track specified events.
      *
-     * @param array $events Event names or classes to track
+     * @param  array  $events  Event names or classes to track
      * @return void
      */
     protected function trackEvents(array $events)

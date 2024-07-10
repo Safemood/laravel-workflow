@@ -100,7 +100,7 @@ trait ManagesWorkflowExecution
     protected function dispatchJob($action, array $context): void
     {
 
-        $action::dispatch($context);    
+        $action::dispatch($context);
 
     }
 }
