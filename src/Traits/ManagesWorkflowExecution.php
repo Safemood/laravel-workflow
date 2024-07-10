@@ -2,7 +2,6 @@
 
 namespace Safemood\Workflow\Traits;
 
-
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Safemood\Workflow\Enums\ActionState;
 
@@ -81,7 +80,6 @@ trait ManagesWorkflowExecution
                 }
             }
         }
-
 
         return true;
     }
