@@ -1,4 +1,4 @@
-# Laravel Workflow Manager
+# Laravel Workflow
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/safemood/laravel-workflow.svg?style=flat-square)](https://packagist.org/packages/safemood/laravel-workflow)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/safemood/laravel-workflow/Tests?label=tests&style=flat-square)](https://github.com/safemood/laravel-workflow/actions?query=workflow%3ATests)
@@ -7,7 +7,6 @@
 
 Laravel Workflow Manager simplifies the creation and management of workflows in Laravel applications, providing features for defining actions, tracking events, and handling responses.
 
-- [Laravel Workflow Manager](#laravel-workflow-manager)
   - [Installation](#installation)
   - [Create a Workflow](#create-a-workflow)
   - [Create Actions](#create-actions)
@@ -39,6 +38,29 @@ You can create an action using the artisan command:
 php artisan make:action ValidateCartItems
 ```
 
+```php
+<?php
+
+namespace App\Actions;
+
+use Safemood\Workflow\Action;
+
+class ValidateCartItems extends Action
+{
+    public function handle(array &$context)
+    {
+        // Simulate validation logic
+        if (empty($context['cart'])) {
+            throw new \Exception('Cart is empty');
+        }
+
+       // you can pass data to the next action if you want
+	  $context['validated'] = true; 
+        
+    }
+}
+```
+
 
 ## Basic Example
 
@@ -49,7 +71,7 @@ Once you have set up your workflows and actions, you can define your business lo
 In your `PaymentWorkflow` class, you define the sequence of actions and conditions that make up your workflow:
 
 ```php
-// app/Workflows/PaymentWorkflow.php
+<?php
 
 namespace App\Workflows;
 
@@ -59,7 +81,7 @@ use App\Actions\ValidateCartItems;
 use App\Events\PaymentProcessed;
 use App\Jobs\SendEmails;
 use App\Observers\UserObserver;
-use App\Models\User;
+use App\Models\Order;
 use Safemood\Workflow\WorkflowManager;
 
 class PaymentWorkflow extends Workflow
@@ -75,22 +97,25 @@ class PaymentWorkflow extends Workflow
         // The main action of the workflow
         $this->addMainAction(new MakePayment());
 
-        // Actions to be executed after the main action (job)
-        $this->addAfterAction(new SendEmails()); 
+        // Actions to be executed after the main action
+        $this->addAfterAction(new SendEmails()); // Normal laravel Job in this example
 
         // Observers to register for specific entities
         $this->registerObservers([
-            User::class => UserObserver::class,
+            Order::class => OrderObserver::class,
         ]);
 
-        // Track events for debugging or insight during workflow execution
-        $this->trackAllEvents(); // Track all events
-        // or
-        // $this->trackEventsIn('App\Events\\'); // Track events in specific namespace
-        // or
-        // $this->trackEvents([
-        //     PaymentProcessed::class
-        // ]); // Track specific events
+        // Good Debugging or if you want to understand what is happining during the workflow execution: 
+	  
+	   $this->trackEvents([
+            PaymentProcessed::class
+        ]);
+	  
+       // $this->trackAllEvents(); // or
+
+       // $this->trackEventsIn('App\Events\\'); 
+
+       
     }
 }
 ```
@@ -98,39 +123,43 @@ class PaymentWorkflow extends Workflow
 ### Execute Workflow
 
 ```php
+<?php
+
+namespace App\Http\Controllers;
+
 use App\Workflows\PaymentWorkflow;
+use Illuminate\Http\Request;
 
-public function checkout()
+class PaymentController extends Controller
 {
-    // Example context data representing a user's cart and user information
-    $context = [
-        'cart' => [
-            ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
-            ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1]
-        ],
-        'user' => [
-            'id' => 123,
-            'name' => 'John Doe',
-            'email' => 'john.doe@example.com'
-        ]
-    ];
+    public function payment(Request $request)
+    {
+        // Example context data representing a user's cart and user information
+        $context = [
+            'cart' => [
+                ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
+                ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1]
+            ],
+            'user_id' => 123
+        ];
 
-    // Execute the PaymentWorkflow with the provided context
-    $paymentWorkflow = (new PaymentWorkflow)->run($context);
+        // Execute the PaymentWorkflow with the provided context
+        $paymentWorkflow = (new PaymentWorkflow)->run($context);
 
-    // Check if the workflow execution was successful
-    $success = $paymentWorkflow->passes();
+        // Check if the workflow execution was successful
+        $success = $paymentWorkflow->passes();
 
-    // Check if the workflow execution failed
-    $failure = $paymentWorkflow->failed();
+        // Check if the workflow execution failed
+        $failure = $paymentWorkflow->failed();
 
-    // Handle the response based on the workflow outcome
-    if ($success) {
-        return $paymentWorkflow->successResponse()
-    }  
-    
-    return $paymentWorkflow->failureResponse()
-    
+        // Handle the response based on the workflow outcome
+        if ($success) {
+            return $paymentWorkflow->successResponse();
+        }  
+
+        return $paymentWorkflow->failureResponse();
+    }
 }
+
 
 ```
