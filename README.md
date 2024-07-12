@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/safemood/laravel-workflow/Check%20&%20fix%20styling?label=code%20style&style=flat-square)](https://github.com/safemood/laravel-workflow/actions?query=workflow%3A"Check+%26+fix+styling")
 [![Total Downloads](https://img.shields.io/packagist/dt/safemood/laravel-workflow.svg?style=flat-square)](https://packagist.org/packages/safemood/laravel-workflow)
 
-Laravel Workflow Manager simplifies the creation and management of workflows in Laravel applications, providing features for defining actions, tracking events, and handling responses.
+Laravel Workflow simplifies the creation and management of workflows in Laravel applications, providing features for defining actions, tracking events, and handling responses.
 
   - [Installation](#installation)
   - [Create a Workflow](#create-a-workflow)
