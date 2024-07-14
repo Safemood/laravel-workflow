@@ -1,7 +1,7 @@
 <?php
 
 namespace Safemood\Workflow\Traits;
-use Illuminate\Support\Traits\Dumpable;
+ 
 
 trait WorkflowTraits
 {
