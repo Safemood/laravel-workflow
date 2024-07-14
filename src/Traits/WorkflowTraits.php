@@ -1,7 +1,6 @@
 <?php
 
 namespace Safemood\Workflow\Traits;
- 
 
 trait WorkflowTraits
 {
