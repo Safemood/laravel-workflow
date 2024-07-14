@@ -6,7 +6,7 @@ trait WorkflowTraits
 {
     use ActionsTrait;
     use HasResponses;
-    use ManagesWorkflowExecution;
+    use ManagesExecution;
     use RegistersObservers;
     use TracksActionStates;
     use TracksEvents;
