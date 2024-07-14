@@ -3,7 +3,8 @@
 use Safemood\Workflow\Traits\HasResponses;
 
 beforeEach(function () {
-    $this->dummyClass = new class {
+    $this->dummyClass = new class
+    {
         use HasResponses;
     };
 });

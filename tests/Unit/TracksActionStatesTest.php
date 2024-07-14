@@ -5,11 +5,14 @@ use Safemood\Workflow\Enums\ActionState;
 use Safemood\Workflow\Traits\TracksActionStates;
 
 beforeEach(function () {
-    $this->dummyClass = new class {
+    $this->dummyClass = new class
+    {
         use TracksActionStates;
 
         public $beforeActions = [];
+
         public $mainActions = [];
+
         public $afterActions = [];
 
         // Methods to expose the protected trait methods for testing
@@ -34,8 +37,10 @@ beforeEach(function () {
         }
     };
 
-    $this->dummyAction = new class extends Action {
+    $this->dummyAction = new class extends Action
+    {
         protected $state;
+
         protected $exception;
 
         public function handle(array &$context)
@@ -45,7 +50,6 @@ beforeEach(function () {
             }
             $context['validated'] = true;
         }
-
     };
 });
 

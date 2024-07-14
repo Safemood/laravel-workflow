@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Event;
 use Safemood\Workflow\Traits\TracksEvents;
 
 beforeEach(function () {
-    $this->dummyClass = new class {
+    $this->dummyClass = new class
+    {
         use TracksEvents;
 
         public function startTrackingAllEvents()

@@ -4,7 +4,8 @@ use Safemood\Workflow\Action;
 use Safemood\Workflow\Traits\ActionsTrait;
 
 beforeEach(function () {
-    $this->dummyClass = new class {
+    $this->dummyClass = new class
+    {
         use ActionsTrait;
     };
 });
@@ -33,7 +34,7 @@ it('can add and get after actions', function () {
 it('can add multiple before actions', function () {
     $beforeActions = [
         Mockery::mock(Action::class),
-        Mockery::mock(Action::class)
+        Mockery::mock(Action::class),
     ];
 
     $this->dummyClass->addBeforeActions($beforeActions);
@@ -44,7 +45,7 @@ it('can add multiple before actions', function () {
 it('can add multiple main actions', function () {
     $mainActions = [
         Mockery::mock(Action::class),
-        Mockery::mock(Action::class)
+        Mockery::mock(Action::class),
     ];
     $this->dummyClass->addMainActions($mainActions);
 
@@ -54,7 +55,7 @@ it('can add multiple main actions', function () {
 it('can add multiple after actions', function () {
     $afterActions = [
         Mockery::mock(Action::class),
-        Mockery::mock(Action::class)
+        Mockery::mock(Action::class),
     ];
     $this->dummyClass->addAfterActions($afterActions);
 
