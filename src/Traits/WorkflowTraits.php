@@ -1,6 +1,7 @@
 <?php
 
 namespace Safemood\Workflow\Traits;
+use Illuminate\Support\Traits\Dumpable;
 
 trait WorkflowTraits
 {
@@ -10,4 +11,5 @@ trait WorkflowTraits
     use RegistersObservers;
     use TracksActionStates;
     use TracksEvents;
+    use Dumpable;
 }
