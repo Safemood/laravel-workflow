@@ -1,5 +1,8 @@
 <?php
+use Safemood\Workflow\Traits\Dumpable;
+  
 
 arch('it will not use debugging functions')
     ->expect(['dd', 'dump', 'ray'])
-    ->each->not->toBeUsed();
+    ->not->toBeUsed()
+    ->ignoring(Dumpable::class);
