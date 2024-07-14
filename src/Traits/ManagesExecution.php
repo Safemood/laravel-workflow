@@ -5,21 +5,21 @@ namespace Safemood\Workflow\Traits;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Safemood\Workflow\Enums\ActionState;
 
-trait ManagesWorkflowExecution
+trait ManagesExecution
 {
     protected $autoBootObservers = true;
 
     protected $stopOnFailure = true;
 
-    public function run(array $context, bool $stopOnFailure = true, bool $autoBootObservers = true)
+    public function run(array &$context, bool $stopOnFailure = true, bool $autoBootObservers = true)
     {
-        $workflow = new $this();
-        $workflow->setAutoBootObservers($autoBootObservers);
-        $workflow->setStopOnFailure($stopOnFailure);
-        $workflow->handle($context);
-        $workflow->execute($context);
 
-        return $workflow;
+        $this->setAutoBootObservers($autoBootObservers);
+        $this->setStopOnFailure($stopOnFailure);
+        $this->handle($context);
+        $this->execute($context);
+
+        return $this;
     }
 
     public function setAutoBootObservers(bool $value)
@@ -30,6 +30,16 @@ trait ManagesWorkflowExecution
     public function setStopOnFailure(bool $value)
     {
         $this->stopOnFailure = $value;
+    }
+
+    public function getAutoBootObservers(): bool
+    {
+        return $this->autoBootObservers;
+    }
+
+    public function getStopOnFailure(): bool
+    {
+        return $this->stopOnFailure;
     }
 
     protected function execute(array $context)
@@ -95,7 +105,7 @@ trait ManagesWorkflowExecution
         return $action instanceof ShouldQueue;
     }
 
-    protected function dispatchJob($action, array $context): void
+    protected function dispatchJob($action, array &$context): void
     {
 
         $action::dispatch($context);
