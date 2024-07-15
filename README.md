@@ -7,6 +7,7 @@
 
 Laravel Workflow combines feature details into one class, allowing for action definition and event tracking, simplifying understanding and revealing hidden logic.
 
+- [Laravel Workflow](#laravel-workflow)
   - [Installation](#installation)
   - [Create a Workflow](#create-a-workflow)
   - [Create Actions](#create-actions)
@@ -49,7 +50,7 @@ class ValidateCartItems extends Action
 {
     public function handle(array &$context)
     {
-        // Simulate validation logic
+        // Simulate extra validation logic
         if (empty($context['cart'])) {
             throw new \Exception('Cart is empty');
         }
@@ -151,6 +152,9 @@ class PaymentController extends Controller
 
         // Check if the workflow execution failed
         $failure = $paymentWorkflow->failed();
+
+        // Dump the workflow for debugging
+        // $paymentWorkflow->dd();
 
         // Handle the response based on the workflow outcome
         if ($success) {
