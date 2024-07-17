@@ -1,6 +1,6 @@
 {
     "name": "safemood/laravel-workflow",
-    "description": "This is my package laravel-workflow",
+    "description": "Laravel package that simplifies workflows with clear actions definition and event tracking.",
     "keywords": [
         "Safemood",
         "laravel",
