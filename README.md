@@ -1,8 +1,9 @@
 # Laravel Workflow
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/safemood/laravel-workflow.svg?style=flat-square)](https://packagist.org/packages/safemood/laravel-workflow)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/safemood/laravel-workflow/Tests?label=tests&style=flat-square)](https://github.com/safemood/laravel-workflow/actions?query=workflow%3ATests)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/safemood/laravel-workflow/Check%20&%20fix%20styling?label=code%20style&style=flat-square)](https://github.com/safemood/laravel-workflow/actions?query=workflow%3A"Check+%26+fix+styling")
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/safemood/laravel-workflow?style=flat-square&color=blue
+)](https://packagist.org/packages/safemood/laravel-workflow)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/safemood/laravel-workflow/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/safemood/laravel-workflow/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/safemood/laravel-workflow/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/safemood/laravel-workflow/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 
 Laravel Workflow combines feature details into one class, allowing for action definition and event tracking, simplifying understanding and revealing hidden logic.
 
