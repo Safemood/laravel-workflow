@@ -3,7 +3,6 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/safemood/laravel-workflow.svg?style=flat-square)](https://packagist.org/packages/safemood/laravel-workflow)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/safemood/laravel-workflow/Tests?label=tests&style=flat-square)](https://github.com/safemood/laravel-workflow/actions?query=workflow%3ATests)
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/safemood/laravel-workflow/Check%20&%20fix%20styling?label=code%20style&style=flat-square)](https://github.com/safemood/laravel-workflow/actions?query=workflow%3A"Check+%26+fix+styling")
-[![Total Downloads](https://img.shields.io/packagist/dt/safemood/laravel-workflow.svg?style=flat-square)](https://packagist.org/packages/safemood/laravel-workflow)
 
 Laravel Workflow combines feature details into one class, allowing for action definition and event tracking, simplifying understanding and revealing hidden logic.
 
