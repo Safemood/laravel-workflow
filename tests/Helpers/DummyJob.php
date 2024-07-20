@@ -7,8 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Safemood\Workflow\Action;
 
-class DummyJob implements ShouldQueue
+class DummyJob extends Action implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -23,5 +24,5 @@ class DummyJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void {}
+    public function handle(array &$context): void {}
 }
