@@ -22,7 +22,7 @@ beforeEach(function () {
 
         public function isQueuedAction($action): bool
         {
-            return $this->isJobAction($action);
+            return $this->isDispatchable($action);
         }
 
         public function handle(array &$context)
@@ -33,7 +33,7 @@ beforeEach(function () {
 
         public function triggerJob($action, array &$context): void
         {
-            $this->dispatchJob($action, $context);
+            $this->dispatchAction($action, $context);
         }
 
         public function processActions(array $actions, array &$context): bool
