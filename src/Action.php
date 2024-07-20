@@ -20,8 +20,6 @@ abstract class Action
 
     /**
      * Get the state of the action.
-     *
-     * @return ActionState|null
      */
     public function getState(): ?ActionState
     {
@@ -30,9 +28,6 @@ abstract class Action
 
     /**
      * Set the state of the action.
-     *
-     * @param  ActionState $state
-     * @return void
      */
     public function setState(ActionState $state): void
     {
@@ -41,8 +36,6 @@ abstract class Action
 
     /**
      * Get the exception of the action.
-     *
-     * @return \Exception|null
      */
     public function getException(): ?\Exception
     {
@@ -51,9 +44,6 @@ abstract class Action
 
     /**
      * Set the exception of the action.
-     *
-     * @param  \Exception|null  $exception
-     * @return void
      */
     public function setException(?\Exception $exception): void
     {
