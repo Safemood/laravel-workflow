@@ -2,13 +2,10 @@
 
 namespace Safemood\Workflow\Enums;
 
-class ActionState
+enum ActionState: string
 {
-    const PENDING = 'pending';
-
-    const RUNNING = 'running';
-
-    const SUCCESS = 'success';
-
-    const FAILED = 'failed';
+    case PENDING = 'pending';
+    case RUNNING = 'running';
+    case SUCCESS = 'success';
+    case FAILED = 'failed';
 }

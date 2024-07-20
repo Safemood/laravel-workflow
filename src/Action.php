@@ -2,6 +2,8 @@
 
 namespace Safemood\Workflow;
 
+use Safemood\Workflow\Enums\ActionState;
+
 abstract class Action
 {
     private $state;
@@ -19,9 +21,9 @@ abstract class Action
     /**
      * Get the state of the action.
      *
-     * @return mixed
+     * @return ActionState|null
      */
-    public function getState()
+    public function getState(): ?ActionState
     {
         return $this->state;
     }
@@ -29,10 +31,10 @@ abstract class Action
     /**
      * Set the state of the action.
      *
-     * @param  mixed  $state
+     * @param  ActionState $state
      * @return void
      */
-    public function setState($state)
+    public function setState(ActionState $state): void
     {
         $this->state = $state;
     }
@@ -42,7 +44,7 @@ abstract class Action
      *
      * @return \Exception|null
      */
-    public function getException()
+    public function getException(): ?\Exception
     {
         return $this->exception;
     }
@@ -53,7 +55,7 @@ abstract class Action
      * @param  \Exception|null  $exception
      * @return void
      */
-    public function setException($exception)
+    public function setException(?\Exception $exception): void
     {
         $this->exception = $exception;
     }
