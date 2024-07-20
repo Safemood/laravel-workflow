@@ -2,7 +2,8 @@
 
 namespace Safemood\Workflow\Traits;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable as DispatchableJob;
+use Illuminate\Foundation\Events\Dispatchable as DispatchableEvent;
 use Safemood\Workflow\Enums\ActionState;
 
 trait ManagesExecution
@@ -75,8 +76,8 @@ trait ManagesExecution
             $this->initializeActionState($action);
 
             try {
-                if ($this->isJobAction($action)) {
-                    $this->dispatchJob($action, $context);
+                if ($this->isDispatchable($action)) {
+                    $this->dispatchAction($action, $context);
                 } else {
                     $this->handleAction($action, $context);
                 }
@@ -99,13 +100,18 @@ trait ManagesExecution
         $action->handle($context);
     }
 
-    protected function isJobAction($action): bool
+    protected function isDispatchable($action): bool
     {
+        $traits = class_uses($action);
 
-        return $action instanceof ShouldQueue;
+        return ! empty(array_intersect($traits, [
+            DispatchableJob::class,
+            DispatchableEvent::class,
+        ]));
+
     }
 
-    protected function dispatchJob($action, array &$context): void
+    protected function dispatchAction($action, array &$context): void
     {
 
         $action::dispatch($context);
