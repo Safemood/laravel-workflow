@@ -14,6 +14,7 @@ Laravel Workflow combines feature details into one class, allowing for action de
   - [Basic Example](#basic-example)
     - [Define Workflow Logic](#define-workflow-logic)
     - [Execute Workflow](#execute-workflow)
+  - [Conditional Action Execution](#conditional-action-execution)
 
 ## Installation
 
@@ -166,4 +167,43 @@ class PaymentController extends Controller
 }
 
 
+```
+
+## Conditional Action Execution
+
+You can use the when method to conditionally execute an action.
+
+```php
+<?php
+
+namespace App\Workflows;
+
+use App\Actions\CalculateTotal;
+use App\Actions\MakePayment;
+use App\Actions\ValidateCartItems;
+use App\Actions\SendEmailReceipt;
+use Safemood\Workflow\Workflow;
+
+class PaymentWorkflow extends Workflow
+{
+    public function __construct()
+    {
+        $this->when(false, function () {
+            $this->trackAllEvents();
+        });
+
+        $this->when(true, function () {
+            $this->registerObservers([
+                DummyModel::class => DummyModelObserver::class,
+            ]);
+        });
+
+        $this->when(true, function () {
+            $this->addBeforeActions([
+                new DummyAction(),
+                new DummyAction(),
+            ]);
+        });
+    }
+}
 ```
