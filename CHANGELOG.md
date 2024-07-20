@@ -2,6 +2,33 @@
 
 All notable changes to `laravel-workflow` will be documented in this file.
 
+## 0.0.4 - 2024-07-20
+
+**Release Description:**
+
+- **Refactoring and Updates:**
+  
+  - Removed `ShouldQueue` type hint from methods in `ActionsTrait`.
+  - Updated dispatch logic for actions.
+  - Renamed Artisan command `make:action` to `make:workflow-action`.
+  - Refactored `DummyJob` to extend `Action`.
+  - Added a job stub file and introduced `MakeJob` command.
+  - Registered `MakeJob` command in `WorkflowServiceProvider`.
+  
+- **Testing and Improvements:**
+  
+  - Updated method names in `ManagesExecutionTest` to reflect new dispatch logic.
+  - Refactored `Action` class to use `ActionState` enum and added corresponding tests.
+  - Updated `TracksActionStates` to use `ActionState` enum.
+  
+- **Miscellaneous:**
+  
+  - Fixed code styling issues.
+  - Added method for conditional execution.
+  
+
+**Full Changelog**: https://github.com/Safemood/laravel-workflow/compare/0.0.3...0.0.4
+
 ## 0.0.3 - 2024-07-17
 
 Updated docs.
