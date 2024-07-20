@@ -28,15 +28,12 @@ class DummyWorkflow extends WorkflowManager
 
         $this->addAfterAction(new DummyJob());
 
-        if ($this->trackEvents) {
-            $this->trackAllEvents();
-        }
-
-        if ($this->registerObservers) {
+        $this->when($this->trackEvents, fn () => $this->trackAllEvents());
+        $this->when($this->registerObservers, function () {
             $this->registerObservers([
                 DummyModel::class => DummyModelObserver::class,
             ]);
-        }
+        });
 
     }
 }
