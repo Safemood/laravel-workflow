@@ -12,32 +12,25 @@ trait TracksActionStates
     /**
      * Initialize the state for the given action.
      *
-     * @param  mixed  $action
      * @return void
      */
-    public function initializeActionState($action)
+    public function initializeActionState(Action $action)
     {
 
-        if ($action instanceof Action) {
-            $action->setState(ActionState::PENDING);
-        }
+        $action->setState(ActionState::PENDING);
+
     }
 
     /**
      * Update the state of the given action.
      *
-     * @param  mixed  $action
-     * @param  string  $state
      * @param  \Exception|null  $exception
      * @return void
      */
-    public function updateActionState($action, $state, $exception = null)
+    public function updateActionState(Action $action, ActionState $state, $exception = null)
     {
-
-        if ($action instanceof Action) {
-            $action->setState($state);
-            $action->setException($exception);
-        }
+        $action->setState($state);
+        $action->setException($exception);
     }
 
     public function passes(): bool
@@ -57,7 +50,6 @@ trait TracksActionStates
             ) {
                 return false;
             }
-
         }
 
         return true;
