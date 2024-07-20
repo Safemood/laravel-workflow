@@ -2,7 +2,6 @@
 
 namespace Safemood\Workflow\Traits;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Safemood\Workflow\Action;
 
 trait ActionsTrait
@@ -13,7 +12,7 @@ trait ActionsTrait
 
     protected $afterActions = [];
 
-    public function addBeforeAction(Action|ShouldQueue $action)
+    public function addBeforeAction(Action $action)
     {
         $this->beforeActions[] = $action;
 
@@ -29,7 +28,7 @@ trait ActionsTrait
         return $this;
     }
 
-    public function addMainAction(Action|ShouldQueue $action)
+    public function addMainAction(Action $action)
     {
         $this->mainActions[] = $action;
 
@@ -45,7 +44,7 @@ trait ActionsTrait
         return $this;
     }
 
-    public function addAfterAction(Action|ShouldQueue $action)
+    public function addAfterAction(Action $action)
     {
         $this->afterActions[] = $action;
 
