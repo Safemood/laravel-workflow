@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class MakeAction extends GeneratorCommand
 {
-    protected $name = 'make:action';
+    protected $name = 'make:workflow-action';
 
     protected $description = 'Create a new action class';
 
