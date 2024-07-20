@@ -4,7 +4,8 @@ use Safemood\Workflow\Action;
 use Safemood\Workflow\Enums\ActionState;
 
 it('can set and get the state using ActionState', function () {
-    $action = new class extends Action {
+    $action = new class extends Action
+    {
         public function handle(array &$context) {}
     };
 
@@ -18,7 +19,8 @@ it('can set and get the state using ActionState', function () {
 });
 
 it('can set and get the exception', function () {
-    $action = new class extends Action {
+    $action = new class extends Action
+    {
         public function handle(array &$context) {}
     };
 
@@ -29,8 +31,10 @@ it('can set and get the exception', function () {
 });
 
 it('should handle the abstract handle method', function () {
-    $action = new class extends Action {
-        public function handle(array &$context) {
+    $action = new class extends Action
+    {
+        public function handle(array &$context)
+        {
             // Example handle logic
             $context['handled'] = true;
         }
