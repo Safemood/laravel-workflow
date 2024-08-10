@@ -88,7 +88,7 @@ use Safemood\Workflow\WorkflowManager;
 
 class PaymentWorkflow extends WorkflowManager
 {
-    public function __construct()
+    public function handle()
     {
         // Actions to be executed before the main action
         $this->addBeforeActions([
@@ -186,7 +186,7 @@ use Safemood\Workflow\WorkflowManager;
 
 class PaymentWorkflow extends WorkflowManager
 {
-    public function __construct()
+    public function handle()
     {
         $this->when(false, function () {
             $this->trackAllEvents();

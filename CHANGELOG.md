@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-workflow` will be documented in this file.
 
+## 1.0.0 - 2024-07-20
+
+### What's Changed
+
+* Added `when`  method for conditional execution by @Safemood in https://github.com/Safemood/laravel-workflow/pull/2
+
+**Full Changelog**: https://github.com/Safemood/laravel-workflow/compare/0.0.4...1.0.0
+
 ## 0.0.4 - 2024-07-20
 
 **Release Description:**
