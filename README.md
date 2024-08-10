@@ -37,7 +37,7 @@ php artisan make:workflow PaymentWorkflow
 You can create an action using the artisan command:
 
 ```bash
-php artisan make:action ValidateCartItems
+php artisan make:workflow-action ValidateCartItems
 ```
 
 ```php
@@ -86,7 +86,7 @@ use App\Observers\UserObserver;
 use App\Models\Order;
 use Safemood\Workflow\WorkflowManager;
 
-class PaymentWorkflow extends Workflow
+class PaymentWorkflow extends WorkflowManager
 {
     public function __construct()
     {
@@ -182,9 +182,9 @@ use App\Actions\CalculateTotal;
 use App\Actions\MakePayment;
 use App\Actions\ValidateCartItems;
 use App\Actions\SendEmailReceipt;
-use Safemood\Workflow\Workflow;
+use Safemood\Workflow\WorkflowManager;
 
-class PaymentWorkflow extends Workflow
+class PaymentWorkflow extends WorkflowManager
 {
     public function __construct()
     {
