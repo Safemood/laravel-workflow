@@ -171,7 +171,7 @@ class PaymentController extends Controller
 
 ## Conditional Action Execution
 
-You can use the when method to conditionally execute an action.
+You can use the `when` and `unless` methods to conditionally execute an action.
 
 ```php
 <?php
@@ -188,10 +188,6 @@ class PaymentWorkflow extends WorkflowManager
 {
     public function handle()
     {
-        $this->when(false, function () {
-            $this->trackAllEvents();
-        });
-
         $this->when(true, function () {
             $this->registerObservers([
                 DummyModel::class => DummyModelObserver::class,
@@ -204,6 +200,12 @@ class PaymentWorkflow extends WorkflowManager
                 new DummyAction(),
             ]);
         });
+
+        $this->unless(
+            value: false,
+            callback: fn () => $this->trackAllEvents(),
+            default: fn () => $this->doSomething()
+        );
     }
 }
 ```

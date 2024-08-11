@@ -2,6 +2,8 @@
 
 namespace Safemood\Workflow\Traits;
 
+use Illuminate\Support\Traits\Conditionable;
+
 trait WorkflowTraits
 {
     use ActionsTrait;
@@ -11,4 +13,5 @@ trait WorkflowTraits
     use RegistersObservers;
     use TracksActionStates;
     use TracksEvents;
+    use Conditionable;
 }
