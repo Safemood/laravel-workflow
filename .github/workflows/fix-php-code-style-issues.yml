@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
 
       - name: Fix PHP code style issues
         uses: aglipanci/laravel-pint-action@2.4
@@ -26,3 +24,10 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Fix styling
+          branch: ${{ github.head_ref }}  # Use the branch name for commits
+
+      - name: Push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git push origin ${{ github.head_ref }}  # Push changes to the branch
