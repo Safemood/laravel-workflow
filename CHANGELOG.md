@@ -2,6 +2,19 @@
 
 All notable changes to `laravel-workflow` will be documented in this file.
 
+## 1.1.0 - 2024-08-14
+
+<!-- Release notes generated using configuration in .github/release.yml at 1.1.0 -->
+### What's Changed
+
+* Added Laravel Built-in Support for Conditional Execution with `when` and `unless` by @mreduar  in https://github.com/Safemood/laravel-workflow/pull/6
+
+### New Contributors
+
+* @mreduar  made their first contribution in https://github.com/Safemood/laravel-workflow/pull/6
+
+**Full Changelog**: https://github.com/Safemood/laravel-workflow/compare/1.0.0...1.1.0
+
 ## 1.0.0 - 2024-07-20
 
 ### What's Changed
