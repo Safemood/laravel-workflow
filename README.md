@@ -204,6 +204,12 @@ class PaymentWorkflow extends WorkflowManager
                 new DummyAction(),
             ]);
         });
+
+        $this->unless(
+             value: false,
+             callback: fn () => $this->trackAllEvents(),
+             default: fn () => $this->doSomething()
+        );
     }
 }
 ```
