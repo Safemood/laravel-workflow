@@ -2,6 +2,7 @@
 
 namespace Safemood\Workflow;
 
+use Safemood\Workflow\Contracts\DTOInterface;
 use Safemood\Workflow\Enums\ActionState;
 
 abstract class Action
@@ -13,10 +14,10 @@ abstract class Action
     /**
      * Handle the action.
      *
-     * @param  array  &$context  The context data passed through the workflow.
+     * @param  DTOInterface  $context  The context data passed through the workflow.
      * @return void
      */
-    abstract public function handle(array &$context);
+    abstract public function handle(DTOInterface &$context);
 
     /**
      * Get the state of the action.

@@ -4,6 +4,7 @@ namespace Safemood\Workflow\Traits;
 
 use Illuminate\Foundation\Bus\Dispatchable as DispatchableJob;
 use Illuminate\Foundation\Events\Dispatchable as DispatchableEvent;
+use Safemood\Workflow\Contracts\DTOInterface;
 use Safemood\Workflow\Enums\ActionState;
 
 trait ManagesExecution
@@ -12,7 +13,7 @@ trait ManagesExecution
 
     protected $stopOnFailure = true;
 
-    public function run(array &$context, bool $stopOnFailure = true, bool $autoBootObservers = true)
+    public function run(DTOInterface &$context, bool $stopOnFailure = true, bool $autoBootObservers = true)
     {
 
         $this->setAutoBootObservers($autoBootObservers);
@@ -43,7 +44,7 @@ trait ManagesExecution
         return $this->stopOnFailure;
     }
 
-    protected function execute(array $context)
+    protected function execute(DTOInterface $context)
     {
         try {
             if ($this->autoBootObservers && method_exists($this, 'bootObserversIfNeeded')) {
@@ -56,7 +57,7 @@ trait ManagesExecution
         }
     }
 
-    protected function executeWorkflowActions(array &$context)
+    protected function executeWorkflowActions(DTOInterface &$context)
     {
         if (! $this->executeActions($this->beforeActions, $context)) {
             return;
@@ -70,7 +71,7 @@ trait ManagesExecution
         }
     }
 
-    protected function executeActions(array $actions, array &$context)
+    protected function executeActions(array $actions, DTOInterface &$context)
     {
         foreach ($actions as $action) {
             $this->initializeActionState($action);
@@ -95,7 +96,7 @@ trait ManagesExecution
         return true;
     }
 
-    protected function handleAction($action, array &$context)
+    protected function handleAction($action, DTOInterface &$context)
     {
         $action->handle($context);
     }
@@ -111,7 +112,7 @@ trait ManagesExecution
 
     }
 
-    protected function dispatchAction($action, array &$context): void
+    protected function dispatchAction($action, DTOInterface &$context): void
     {
 
         $action::dispatch($context);
