@@ -2,6 +2,7 @@
 
 namespace App\Workflows;
 
+use Safemood\Workflow\Contracts\DTOInterface;
 use Safemood\Workflow\WorkflowManager;
 use Tests\Helpers\DummyAction;
 use Tests\Helpers\DummyActionWithEvents;
@@ -16,7 +17,7 @@ class DummyWorkflow extends WorkflowManager
         protected $registerObservers = true,
     ) {}
 
-    public function handle(array $context)
+    public function handle(DTOInterface $context)
     {
 
         $this->addBeforeActions([

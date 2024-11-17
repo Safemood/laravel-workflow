@@ -1,6 +1,7 @@
 <?php
 
 use Safemood\Workflow\Action;
+use Safemood\Workflow\Contracts\DTOInterface;
 use Safemood\Workflow\Enums\ActionState;
 use Safemood\Workflow\Traits\TracksActionStates;
 
@@ -43,12 +44,12 @@ beforeEach(function () {
 
         protected $exception;
 
-        public function handle(array &$context)
+        public function handle(DTOInterface &$context)
         {
-            if (empty($context['cart'])) {
+            if (empty($context->cart)) {
                 throw new \Exception('Cart is empty');
             }
-            $context['validated'] = true;
+            $context->toArray()['validated'] = true;
         }
     };
 });
