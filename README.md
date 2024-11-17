@@ -16,6 +16,7 @@ Laravel Workflow combines feature details into one class, allowing for action de
     - [Define Workflow Logic](#define-workflow-logic)
     - [Execute Workflow](#execute-workflow)
   - [Conditional Action Execution](#conditional-action-execution)
+  - [Using DTO for Context](#using-dto-for-context)
 
 ## Installation
 
@@ -47,18 +48,19 @@ php artisan make:workflow-action ValidateCartItems
 namespace App\Actions;
 
 use Safemood\Workflow\Action;
+use App\DTO\CartDTO;
 
 class ValidateCartItems extends Action
 {
-    public function handle(array &$context)
+    public function handle(CartDTO &$context)
     {
         // Simulate extra validation logic
-        if (empty($context['cart'])) {
+        if (empty($context->cart)) {
             throw new \Exception('Cart is empty');
         }
 
        // you can pass data to the next action if you want
-	  $context['validated'] = true; 
+	  $context->validated = true; 
         
     }
 }
@@ -132,19 +134,20 @@ namespace App\Http\Controllers;
 
 use App\Workflows\PaymentWorkflow;
 use Illuminate\Http\Request;
+use App\DTO\CartDTO;
 
 class PaymentController extends Controller
 {
     public function payment(Request $request)
     {
-        // Example context data representing a user's cart and user information
-        $context = [
-            'cart' => [
+         // Example context data representing a user's cart and user information
+        $context = new CartDTO(
+            [
                 ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
                 ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1]
             ],
-            'user_id' => 123
-        ];
+            123
+        );
 
         // Execute the PaymentWorkflow with the provided context
         $paymentWorkflow = (new PaymentWorkflow)->run($context);
@@ -212,5 +215,28 @@ class PaymentWorkflow extends WorkflowManager
              default: fn () => $this->doSomething()
         );
     }
+}
+```
+
+## Using DTO for Context  
+
+DTOInterface and BaseDTO allow you to handle context type-safely by using DTOs instead of raw arrays. Here's an example of defining a CartDTO class:
+
+```php
+<?php
+
+namespace App\DTO;
+
+use Safemood\Workflow\DTO\BaseDTO;
+
+class CartDTO extends BaseDTO
+{
+    public function __construct(
+        public array $cart,
+        public int $user_id,
+        public bool $validated = false
+    ) {}
+    // BaseDTO already implements the DTOInterface
+    // Automatically generates getter, setter, and toArray() methods
 }
 ```
