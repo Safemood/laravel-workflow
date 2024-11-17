@@ -4,5 +4,11 @@ namespace Safemood\Workflow\Contracts;
 
 interface WorkflowInterface
 {
-    public function handle(array $context);
+    /**
+     * Handle the workflow with the given context.
+     *
+     *
+     * @return mixed
+     */
+    public function handle(DTOInterface $context);
 }

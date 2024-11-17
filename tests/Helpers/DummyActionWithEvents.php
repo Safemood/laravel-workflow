@@ -6,12 +6,13 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 use Safemood\Workflow\Action;
+use Safemood\Workflow\Contracts\DTOInterface;
 
 class DummyActionWithEvents extends Action
 {
-    public function handle(array &$context)
+    public function handle(DTOInterface &$context)
     {
-        if (Arr::has($context, 'throw_expection')) {
+        if (Arr::has($context->toArray(), 'throw_expection')) {
             throw new \Exception('A Dummy Exception');
         }
 
@@ -24,7 +25,7 @@ class DummyActionWithEvents extends Action
         $dummyModel = new DummyModel(['name' => 'Test Name', 'email' => 'test@example.com']);
         Event::dispatch('eloquent.created: '.DummyModel::class, $dummyModel);
 
-        $context['handled'] = true;
+        $context->handled = true;
 
     }
 }

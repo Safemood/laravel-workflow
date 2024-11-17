@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Safemood\Workflow\Action;
+use Safemood\Workflow\Contracts\DTOInterface;
 
 class DummyJob extends Action implements ShouldQueue
 {
@@ -24,5 +25,5 @@ class DummyJob extends Action implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(array &$context): void {}
+    public function handle(DTOInterface &$context): void {}
 }

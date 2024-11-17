@@ -1,10 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Queue;
+use Safemood\Workflow\Contracts\DTOInterface;
 use Safemood\Workflow\Enums\ActionState;
 use Safemood\Workflow\Traits\ActionsTrait;
 use Safemood\Workflow\Traits\ManagesExecution;
 use Safemood\Workflow\Traits\TracksActionStates;
 use Tests\Helpers\DummyAction;
+use Tests\Helpers\DummyDTO;
 use Tests\Helpers\DummyJob;
 
 beforeEach(function () {
@@ -25,28 +28,28 @@ beforeEach(function () {
             return $this->isDispatchable($action);
         }
 
-        public function handle(array &$context)
+        public function handle(DTOInterface &$context)
         {
 
-            $context['handled'] = true;
+            $context->handled = true;
         }
 
-        public function triggerJob($action, array &$context): void
+        public function triggerJob($action, DTOInterface &$context): void
         {
             $this->dispatchAction($action, $context);
         }
 
-        public function processActions(array $actions, array &$context): bool
+        public function processActions(array $actions, DTOInterface &$context): bool
         {
             return $this->executeActions($actions, $context);
         }
 
-        public function processWorkflowActions(array &$context)
+        public function processWorkflowActions(DTOInterface &$context)
         {
             return $this->executeWorkflowActions($context);
         }
 
-        public function runWorkflow(array &$context, bool $stopOnFailure = true, bool $autoBootObservers = true)
+        public function runWorkflow(DTOInterface &$context, bool $stopOnFailure = true, bool $autoBootObservers = true)
         {
             return $this->run($context, $stopOnFailure, $autoBootObservers);
         }
@@ -70,26 +73,38 @@ it('sets and gets stop on failure', function () {
 });
 
 it('handles action correctly', function () {
-    $context = [];
+    $context = new DummyDTO(
+        ['id' => 1, 'name' => 'John Doe'],
+        [
+            ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
+            ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1],
+        ]
+    );
 
-    $this->workflow->executeAction(new DummyAction(), $context);
+    $this->workflow->executeAction(new DummyAction, $context);
 
     expect($context)->toHaveKey('handled');
-    expect($context['handled'])->toBeTrue();
+    expect($context->handled)->toBeTrue();
 });
 
 it('identifies job action correctly', function () {
-    expect($this->workflow->isQueuedAction(new DummyAction()))->toBeFalse();
-    expect($this->workflow->isQueuedAction(new DummyJob()))->toBeTrue();
+    expect($this->workflow->isQueuedAction(new DummyAction))->toBeFalse();
+    expect($this->workflow->isQueuedAction(new DummyJob))->toBeTrue();
 });
 
 it('dispatches job action', function () {
 
     Queue::fake();
 
-    $context = ['key' => 'value'];
+    $context = new DummyDTO(
+        ['id' => 1, 'name' => 'John Doe'],
+        [
+            ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
+            ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1],
+        ]
+    );
 
-    $dummyJob = new DummyJob();
+    $dummyJob = new DummyJob;
 
     $this->workflow->triggerJob($dummyJob, $context);
 
@@ -98,19 +113,27 @@ it('dispatches job action', function () {
 
 it('executes actions successfully and updates their states', function () {
 
-    $context = [];
-    $dummyAction = new DummyAction();
+    $context = new DummyDTO(
+        ['id' => 1, 'name' => 'John Doe'],
+        [
+            ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
+            ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1],
+        ]
+    );
+
+    $dummyAction = new DummyAction;
     $result = $this->workflow->processActions([$dummyAction], $context);
 
     expect($result)->toBeTrue();
     expect($dummyAction->getState())->toBe(ActionState::SUCCESS);
-    expect($context['handled'])->toBeTrue();
+    expect($context->handled)->toBeTrue();
 });
 
 it('updates action state to FAILED if an exception is thrown', function () {
 
-    $context = ['throw_expection' => true];
-    $dummyAction = new DummyAction();
+    $context = new DummyDTO([], [], ['throw_expection' => true]);
+
+    $dummyAction = new DummyAction;
     $result = $this->workflow->processActions([$dummyAction], $context);
 
     expect($result)->toBeFalse();
@@ -120,8 +143,14 @@ it('updates action state to FAILED if an exception is thrown', function () {
 });
 
 it('processes workflow actions successfully', function () {
-    $context = [];
-    $dummyAction = new DummyAction();
+    $context = new DummyDTO(
+        ['id' => 1, 'name' => 'John Doe'],
+        [
+            ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
+            ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1],
+        ]
+    );
+    $dummyAction = new DummyAction;
     $this->workflow->addBeforeAction($dummyAction);
     $this->workflow->addMainAction($dummyAction);
     $this->workflow->addAfterAction($dummyAction);
@@ -130,11 +159,17 @@ it('processes workflow actions successfully', function () {
 
     expect($this->workflow->passes())->toBeTrue();
     expect($context)->toHaveKey('handled');
-    expect($context['handled'])->toBeTrue();
+    expect($context->handled)->toBeTrue();
 });
 
 it('runs the workflow and initializes correctly', function () {
-    $context = [];
+    $context = new DummyDTO(
+        ['id' => 1, 'name' => 'John Doe'],
+        [
+            ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
+            ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1],
+        ]
+    );
 
     $result = $this->workflow->runWorkflow($context);
 
@@ -145,7 +180,13 @@ it('runs the workflow and initializes correctly', function () {
 });
 
 it('runs the workflow with stopOnFailure set to false', function () {
-    $context = [];
+    $context = new DummyDTO(
+        ['id' => 1, 'name' => 'John Doe'],
+        [
+            ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
+            ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1],
+        ]
+    );
 
     $result = $this->workflow->runWorkflow($context, false);
 
@@ -155,7 +196,13 @@ it('runs the workflow with stopOnFailure set to false', function () {
 });
 
 it('runs the workflow with autoBootObservers set to false', function () {
-    $context = [];
+    $context = new DummyDTO(
+        ['id' => 1, 'name' => 'John Doe'],
+        [
+            ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
+            ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1],
+        ]
+    );
 
     $result = $this->workflow->runWorkflow($context, true, false);
 

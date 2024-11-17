@@ -1,17 +1,25 @@
 <?php
 
 use App\Workflows\DummyWorkflow;
+use Illuminate\Support\Facades\Queue;
+use Tests\Helpers\DummyDTO;
 use Tests\Helpers\DummyJob;
 use Tests\Helpers\DummyModel;
 use Tests\Helpers\DummyModelObserver;
 
 it('executes the DummyWorkflow correctly with events tracking and observers registrations', function () {
 
-    $context = [];
+    $context = new DummyDTO(
+        ['id' => 1, 'name' => 'John Doe'],
+        [
+            ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
+            ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1],
+        ]
+    );
 
     Queue::fake();
 
-    $workflow = (new DummyWorkflow())->run($context);
+    $workflow = (new DummyWorkflow)->run($context);
 
     expect($workflow->passes())->toBeTrue();
 
@@ -36,7 +44,13 @@ it('executes the DummyWorkflow correctly with events tracking and observers regi
 
 it('execute the DummyWorkflow correctly, failing to track events and register observers ', function () {
 
-    $context = [];
+    $context = new DummyDTO(
+        ['id' => 1, 'name' => 'John Doe'],
+        [
+            ['id' => 1, 'name' => 'Product A', 'price' => 100, 'quantity' => 2],
+            ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1],
+        ]
+    );
 
     Queue::fake();
 
@@ -50,7 +64,9 @@ it('execute the DummyWorkflow correctly, failing to track events and register ob
 
     expect($trackedEvents)->toBeEmpty();
 
-    $attached = $this->assertObserverIsAttachedToEvent(DummyModelObserver::class, 'eloquent.booted: '.DummyModel::class);
+    $attached = $this->assertObserverIsAttachedToEvent(
+        DummyModelObserver::class, 'eloquent.booted: '.DummyModel::class
+    );
 
     expect($attached)->toBeFalse();
 });
