@@ -19,7 +19,7 @@ it('executes the DummyWorkflow correctly with events tracking and observers regi
 
     Queue::fake();
 
-    $workflow = (new DummyWorkflow())->run($context);
+    $workflow = (new DummyWorkflow)->run($context);
 
     expect($workflow->passes())->toBeTrue();
 

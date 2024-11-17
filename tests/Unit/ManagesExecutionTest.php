@@ -81,15 +81,15 @@ it('handles action correctly', function () {
         ]
     );
 
-    $this->workflow->executeAction(new DummyAction(), $context);
+    $this->workflow->executeAction(new DummyAction, $context);
 
     expect($context)->toHaveKey('handled');
     expect($context->handled)->toBeTrue();
 });
 
 it('identifies job action correctly', function () {
-    expect($this->workflow->isQueuedAction(new DummyAction()))->toBeFalse();
-    expect($this->workflow->isQueuedAction(new DummyJob()))->toBeTrue();
+    expect($this->workflow->isQueuedAction(new DummyAction))->toBeFalse();
+    expect($this->workflow->isQueuedAction(new DummyJob))->toBeTrue();
 });
 
 it('dispatches job action', function () {
@@ -104,7 +104,7 @@ it('dispatches job action', function () {
         ]
     );
 
-    $dummyJob = new DummyJob();
+    $dummyJob = new DummyJob;
 
     $this->workflow->triggerJob($dummyJob, $context);
 
@@ -121,7 +121,7 @@ it('executes actions successfully and updates their states', function () {
         ]
     );
 
-    $dummyAction = new DummyAction();
+    $dummyAction = new DummyAction;
     $result = $this->workflow->processActions([$dummyAction], $context);
 
     expect($result)->toBeTrue();
@@ -133,7 +133,7 @@ it('updates action state to FAILED if an exception is thrown', function () {
 
     $context = new DummyDTO([], [], ['throw_expection' => true]);
 
-    $dummyAction = new DummyAction();
+    $dummyAction = new DummyAction;
     $result = $this->workflow->processActions([$dummyAction], $context);
 
     expect($result)->toBeFalse();
@@ -150,7 +150,7 @@ it('processes workflow actions successfully', function () {
             ['id' => 2, 'name' => 'Product B', 'price' => 50, 'quantity' => 1],
         ]
     );
-    $dummyAction = new DummyAction();
+    $dummyAction = new DummyAction;
     $this->workflow->addBeforeAction($dummyAction);
     $this->workflow->addMainAction($dummyAction);
     $this->workflow->addAfterAction($dummyAction);

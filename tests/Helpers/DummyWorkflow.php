@@ -21,13 +21,13 @@ class DummyWorkflow extends WorkflowManager
     {
 
         $this->addBeforeActions([
-            new DummyAction(),
-            new DummyAction(),
+            new DummyAction,
+            new DummyAction,
         ]);
 
-        $this->addMainAction(new DummyActionWithEvents());
+        $this->addMainAction(new DummyActionWithEvents);
 
-        $this->addAfterAction(new DummyJob());
+        $this->addAfterAction(new DummyJob);
 
         $this->when($this->trackEvents, fn () => $this->trackAllEvents());
         $this->when($this->registerObservers, function () {
