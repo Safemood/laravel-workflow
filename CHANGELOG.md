@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-workflow` will be documented in this file.
 
+## 1.2.0 - 2024-11-17
+
+### What's Changed
+
+* Add global DTOInterface and BaseDTO class by @Safemood in https://github.com/Safemood/laravel-workflow/pull/8
+
+**Full Changelog**: https://github.com/Safemood/laravel-workflow/compare/1.1.0...1.2.0
+
 ## 1.1.0 - 2024-08-14
 
 <!-- Release notes generated using configuration in .github/release.yml at 1.1.0 -->
