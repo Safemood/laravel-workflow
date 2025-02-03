@@ -20,7 +20,7 @@ jobs:
           ref: ${{ github.ref_name }}
 
       - name: Fix PHP code style issues
-        uses: aglipanci/laravel-pint-action@2.4
+        uses: aglipanci/laravel-pint-action@2.5
 
       - name: Commit changes
         run: |
